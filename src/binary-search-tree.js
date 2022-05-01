@@ -27,7 +27,7 @@ class BinarySearchTree {
     
 
     function addNode(node, data){
-      console.debug("try to add new node  "+ data + ' ' + node + node.data );
+      //console.debug("try to add new node  "+ data + ' ' + node + node.data );
       if(node.data > data){//go to left
         if (!node.left){   //add to left
           node.left = new Node(data);
@@ -79,24 +79,24 @@ class BinarySearchTree {
     function findNode(node, data){
       //console.debug('----------------------searching ' +data + " in " + node.data);
       if(!node){
-        console.debug('compare last node ' +data +'return null');
+        //console.debug('compare last node ' +data +'return null');
         return null;
       }
-      console.debug('----------------------searching ' +data + " in " + node.data);
-      console.debug('compare '+node.data + ' and ' +data);
+      //console.debug('----------------------searching ' +data + " in " + node.data);
+      //console.debug('compare '+node.data + ' and ' +data);
       if(node.data == data){        
-        console.debug('compare '+node.data + ' = ' +data+ 'return true');
+        //console.debug('compare '+node.data + ' = ' +data+ 'return true');
         return node;
       }else if(node.data > data){//go to left
-        console.debug('compare '+node.data + ' > ' +data);
+        //console.debug('compare '+node.data + ' > ' +data);
         return findNode(node.left, data); //for new compearing
       }else{  //go to right
-        console.debug('compare '+node.data + ' < ' +data);
+        //console.debug('compare '+node.data + ' < ' +data);
         return findNode(node.right, data); //for new compearing
       }  
     }
     let res = findNode(this._root, data);
-    console.debug('res has '+ data + res);
+    console.debug('res found '+ data + res);
     return res;
   }
 
@@ -106,13 +106,39 @@ class BinarySearchTree {
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this._root) {
+      return null
+    }  
+
+    function findMin(node){ //returns node 
+      console.debug("searchig min step on node = " +node.data)
+      if(node.left){    //go to left
+        return findMin(node.left)
+      }else{
+        return node
+      }
+    }
+    let res =  findMin(this._root);
+    console.debug('found min = ' + res.data);
+    return res.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this._root) {
+      return null
+    }  
+
+    function findMax(node){ //returns node 
+      console.debug("searchig max step on node = " +node.data)
+      if(node.right){    //go to left
+        return findMax(node.right)
+      }else{
+        return node
+      }
+    }
+    let res =  findMax(this._root);
+    console.debug('found max = ' + res.data);
+    return res.data;
   }
 }
 
@@ -125,6 +151,7 @@ bst.add(10);
 console.log(bst.root());
 console.log(bst.find(4));
 console.log(bst.find(7));
+console.log(bst.min());
 
 module.exports = {
   BinarySearchTree
